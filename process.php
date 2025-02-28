@@ -38,6 +38,14 @@ if (count(array_filter($input_values, function($value) { return $value !== null;
     exit;
 }
 
+// Get and display the public IP address (always displayed)
+$publicIP = trim(shell_exec('curl -4 ifconfig.io'));
+if (!empty($publicIP)) {
+    echo "<p><strong>Public IP Address:</strong> " . htmlspecialchars($publicIP) . "</p>";
+} else {
+    echo "<p><strong>Could not retrieve public IP address.</strong></p>";
+}
+
 // Escape values for shell command
 $escaped_values = array_map('escapeshellarg', $input_values);
 
